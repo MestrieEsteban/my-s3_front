@@ -3,6 +3,8 @@
 ![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/2.PNG?raw=true)
 ![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/3.PNG?raw=true)
 ![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/4.PNG?raw=true)
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/5.PNG?raw=true)
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/6.PNG?raw=true)
 
 
 
