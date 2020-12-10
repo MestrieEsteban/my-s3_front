@@ -1,4 +1,12 @@
 # my-s3_app
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/1.PNG?raw=true)
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/2.PNG?raw=true)
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/3.PNG?raw=true)
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/4.PNG?raw=true)
+
+
+
+
 
 ## Build Setup
 
