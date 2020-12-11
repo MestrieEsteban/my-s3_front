@@ -1,7 +1,5 @@
 <template>
-  <main>
-	  acceuil
-  </main>
+  <main>acceuil</main>
 </template>
 
 <script lang="ts">

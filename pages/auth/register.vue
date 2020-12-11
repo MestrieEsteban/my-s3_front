@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <b-form method="post" @submit.prevent="register" v-if="show">
+      <b-form v-if="show" method="post" @submit.prevent="register">
         <b-form-group
           id="input-group-1"
           label="Email address:"
@@ -66,7 +66,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 export default {

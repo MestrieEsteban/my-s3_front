@@ -14,14 +14,14 @@
           </b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
-            <b-nav-item-dropdown right v-if="$store.state.user">
+            <b-nav-item-dropdown v-if="$store.state.user" right>
               <template #button-content>
                 <em>{{ $store.state.user.user.nickname }}</em>
               </template>
               <b-dropdown-item href="/user/profile">Profile</b-dropdown-item>
-              <b-dropdown-item v-on:click="logOut()">Sign Out</b-dropdown-item>
+              <b-dropdown-item @click="logOut()">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item-dropdown right v-else>
+            <b-nav-item-dropdown v-else right>
               <template #button-content>
                 <em>User</em>
               </template>
@@ -36,8 +36,7 @@
   </div>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import { mapGetters } from 'vuex'
@@ -46,7 +45,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'loggedInUser']),
   },
-   methods: {
+  methods: {
     async logOut() {
       this.$store
         .dispatch('reset')
@@ -63,6 +62,6 @@ export default {
           }
         })
     },
-}
+  },
 }
 </script>

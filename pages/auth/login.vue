@@ -10,10 +10,10 @@
               <label class="label">Email</label>
               <div class="control">
                 <input
+                  v-model="email"
                   type="email"
                   class="input"
                   name="email"
-                  v-model="email"
                 />
               </div>
             </div>
@@ -21,10 +21,10 @@
               <label class="label">Password</label>
               <div class="control">
                 <input
+                  v-model="password"
                   type="password"
                   class="input"
                   name="password"
-                  v-model="password"
                 />
               </div>
             </div>
@@ -45,7 +45,6 @@
     </div>
   </section>
 </template>
-
 
 <script>
 const Cookie = process.client ? require('js-cookie') : undefined
@@ -70,10 +69,10 @@ export default {
           password: this.password,
         })
         .then((result) => {
-           if(result.data.message){
-			  alert(result.data.message)
-			  return;
-		  }
+          if (result.data.message) {
+            alert(result.data.message)
+            return
+          }
           this.loading = false
           this.$router.push('/user/profile')
         })

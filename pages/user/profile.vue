@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script >
+<script>
 export default {
   fetch({ store, redirect }) {
     if (!store.state.user) {
@@ -16,5 +16,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
