@@ -10,7 +10,7 @@ export default {
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 		script: [
 			{
-				src: 'https://unpkg.com/vuex-persistedstate/dist/vuex-persistedstate.umd.js'
+				src: 'https://unpkg.com/vuex-persistedstate/dist/vuex-persistedstate.umd.js',
 			}
 		],
 
@@ -49,8 +49,14 @@ export default {
 
 	],
 	// Axios module configuration (https://go.nuxtjs.dev/config-axios)
-	axios: {},
+	axios: {
+		baseURL: 'http://localhost:4242/api/', 
+	},
 
 	// Build Configuration (https://go.nuxtjs.dev/config-build)
 	build: {},
+
+	bootstrapVue: {
+		icons: true
+	}
 }

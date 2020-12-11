@@ -1,67 +1,69 @@
 <template>
   <div>
-    <b-form method="post" @submit.prevent="register" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-      >
-        <b-form-input
-          id="input-1"
-          v-model="email"
-          type="email"
-          name="email"
-          required
-          placeholder="Enter email"
-        ></b-form-input>
-      </b-form-group>
+    <div class="container">
+      <b-form method="post" @submit.prevent="register" v-if="show">
+        <b-form-group
+          id="input-group-1"
+          label="Email address:"
+          label-for="input-1"
+        >
+          <b-form-input
+            id="input-1"
+            v-model="email"
+            type="email"
+            name="email"
+            required
+            placeholder="Enter email"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group
-        id="input-group-2"
-        label="Your nickname:"
-        label-for="input-2"
-      >
-        <b-form-input
-          id="input-2"
-          v-model="nickname"
-          name="nickname"
-          required
-          placeholder="Enter nickname"
-        ></b-form-input>
-      </b-form-group>
+        <b-form-group
+          id="input-group-2"
+          label="Your nickname:"
+          label-for="input-2"
+        >
+          <b-form-input
+            id="input-2"
+            v-model="nickname"
+            name="nickname"
+            required
+            placeholder="Enter nickname"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group
-        id="input-group-2"
-        label="Your password:"
-        label-for="input-3"
-      >
-        <b-form-input
-          id="input-3"
-          v-model="password"
-          type="password"
-          name="password"
-          required
-          placeholder="Enter password"
-        ></b-form-input>
-      </b-form-group>
+        <b-form-group
+          id="input-group-2"
+          label="Your password:"
+          label-for="input-3"
+        >
+          <b-form-input
+            id="input-3"
+            v-model="password"
+            type="password"
+            name="password"
+            required
+            placeholder="Enter password"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group
-        id="input-group-2"
-        label="Your password confirmation:"
-        label-for="input-4"
-      >
-        <b-form-input
-          id="input-4"
-          v-model="passwordConfirmation"
-          type="password"
-          name="passwordConfirmation"
-          required
-          placeholder="Enter password confirmation"
-        ></b-form-input>
-      </b-form-group>
+        <b-form-group
+          id="input-group-2"
+          label="Your password confirmation:"
+          label-for="input-4"
+        >
+          <b-form-input
+            id="input-4"
+            v-model="passwordConfirmation"
+            type="password"
+            name="passwordConfirmation"
+            required
+            placeholder="Enter password confirmation"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-button type="submit" variant="primary">Register</b-button>
-    </b-form>
+        <b-button type="submit" variant="primary">Register</b-button>
+      </b-form>
+    </div>
   </div>
 </template>
 
@@ -89,11 +91,11 @@ export default {
           passwordConfirmation: this.passwordConfirmation,
         })
         .then((result) => {
-		  console.log(result.data.message)
-		  if(result.data.message){
-			  alert(result.data.message)
-			  return;
-		  }
+          console.log(result.data.message)
+          if (result.data.message) {
+            alert(result.data.message)
+            return
+          }
           this.loading = false
           this.$router.push('/user/profile')
         })

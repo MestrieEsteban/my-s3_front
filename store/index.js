@@ -80,6 +80,17 @@ const createStore = () => {
 						}
 					})
 			},
+			getBucket(data) {
+				return api.auth.getBucket(data)
+					.then(response => {
+						try {
+							return response
+						} catch (error) {
+							console.log(error);
+							return response
+						}
+					})
+			},
 		},
 	})
 }
