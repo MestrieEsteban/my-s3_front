@@ -9,10 +9,10 @@
     <br />
     <b-table striped hover selectable :fields="fields" :items="bucketTable" @row-clicked="myMethod($event)" >
 		<template #cell(Test)="row">
-			<b-button variant="info" @click="myMethod(row)">
+			<b-button variant="info" v-b-modal.updateBucket @click="addIdUpdate(row)">
 				    <b-icon-pencil></b-icon-pencil>
 			</b-button>
-			<b-button variant="danger" @click="myMethod(row)">
+			<b-button variant="danger" @click="deleteBucket(row)">
 				    <b-icon-trash></b-icon-trash>
 			</b-button>
 		</template>
@@ -31,6 +31,21 @@
       <br />
       <b-button variant="success" @click="addBucket()">Create</b-button>
     </b-modal>
+
+    <b-modal hide-footer id="updateBucket" title="Update Bucket">
+      <b-form-input
+        id="input-1"
+        type="text"
+        required
+        v-model="update.bucketName"
+        placeholder="Enter new bucket name"
+      ></b-form-input>
+	  
+      <br />
+      <b-button variant="success" @click="updateBucket()">Update</b-button>
+    </b-modal>
+
+
   </b-container>
 </template>
 
@@ -49,11 +64,16 @@ export default {
       create: {
         bucketName: '',
       },
+      update: {
+        bucketName: '',
+        bucketId: '',
+      },
     }
   },
   methods: {
-    myMethod(a) {
-      console.log(a)
+    addIdUpdate(row) {
+      this.update.bucketId = row.item.id
+      this.update.bucketName = row.item.Name
     },
     async getBucket() {
       this.alert = null
@@ -83,7 +103,6 @@ export default {
       }
     },
     async addBucket() {
-      console.log(this.create.bucketName)
       let data = {
         bucketName: this.create.bucketName,
       }
@@ -103,6 +122,39 @@ export default {
         this.$bvModal.hide('createBucket')
       }
     },
+    async deleteBucket(row) {
+      let result = await this.$axios.delete(
+        `upload/buckets/${row.item.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+          },
+        }
+      )
+      if (result) {
+		this.bucketTable = []
+        this.getBucket()
+      }
+	},
+	async updateBucket(){
+		let data = {
+        newBucketName: this.update.bucketName,
+     	 }
+		let result = await this.$axios.put(
+        `upload/buckets/${this.update.bucketId}`, data,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+          },
+        }
+      )
+      if (result) {
+		this.bucketTable = []
+        this.update.bucketName = ''
+        this.getBucket()
+        this.$bvModal.hide('updateBucket')
+      }
+	}
   },
   beforeMount() {
     this.getBucket()
