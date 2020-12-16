@@ -1,3 +1,4 @@
+
 <template>
   <b-container>
     <br>
@@ -16,8 +17,8 @@
 	<br>
 
     <b-table striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket'>
-      <template #cell(Test)="row">
-        <b-button v-b-modal.updateBucket variant="info"  @click="addIdUpdate(row)">
+      <template #cell(Options)="row">
+        <b-button v-b-modal.updateBucket variant="info" @click="addIdUpdate(row)">
           <b-icon-pencil></b-icon-pencil>
         </b-button>
         <b-button variant="danger" @click="deleteBucket(row)">
@@ -26,8 +27,23 @@
       </template>
     </b-table>
 
+
 	<b-table striped hover selectable :fields="fieldsBlobs" :items="blobTable" v-if='showBlobs'  @row-clicked="dowloadBlob($event)">
+
+     <template #cell(Options)="row">
+
+        <b-button variant="info" @click="copyBlob(row)">
+          <b-icon-arrow-down></b-icon-arrow-down>
+        </b-button>
+
+        <b-button variant="danger" @click="deleteBlob1(row)">
+          <b-icon-trash></b-icon-trash>
+        </b-button>
+
+      </template>
+
 	</b-table>
+
     <b-modal id="createBucket" hide-footer title="Create Bucket">
       <b-form-input id="input-1" v-model="create.bucketName" type="text" required placeholder="Enter bucket name">
 
