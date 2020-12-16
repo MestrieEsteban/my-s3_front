@@ -130,7 +130,7 @@ export default {
 				}
 			)
 			if (result.data.length == 0) {
-				this.blobTable = []	
+				this.blobTable = []
 			} else {
 				this.blobTable = []
 				result.data.forEach((element) => {
@@ -203,7 +203,7 @@ export default {
 				link.remove()
 				window.URL.revokeObjectURL(url)
 			}
-			
+
 		},
 
 
