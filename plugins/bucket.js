@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 
 export default {
 	fetch({ store, redirect }) {
@@ -10,10 +11,11 @@ export default {
 			showBlobs: 0,
 			showBucket: 1,
 			actualBucket: '',
+			actualIdBucket: '',
 			bucketTable: [],
 			blobTable: [],
-			fieldsBucket: ['id', 'Name', 'Creation date', 'Last update date', 'Test'],
-			fieldsBlobs: ['id', 'Name', 'Size', 'Type', 'Creation date', 'Last update date', 'Test'],
+			fieldsBucket: ['id', 'Name', 'Creation date', 'Last update date', 'Options'],
+			fieldsBlobs: ['id', 'Name', 'Size', 'Type', 'Creation date', 'Last update date', 'Options'],
 			create: {
 				bucketName: '',
 			},
@@ -60,7 +62,7 @@ export default {
 						Name: element.bucketName,
 						'Creation date': createdAt.toLocaleString(),
 						'Last update date': updateAt.toLocaleString(),
-						test: `<b-button variant="success" @click="addBucket()">Create</b-button>`,
+						test: `<b-button variant="danger" @click="addBucket()">Create</b-button>`,
 					})
 				})
 			}
@@ -98,6 +100,31 @@ export default {
 				this.getBucket()
 			}
 		},
+
+		async deleteBlob1(data){
+		
+			const result = await this.$axios.delete(`upload/blobs/${data.item.id}`, {
+				headers: {
+					Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+				},
+			})
+			if (result) {
+				this.getBlob({ 'id':this.actualIdBucket, 'Name':this.actualBucket});
+			}
+		},
+
+		async copyBlob(data){
+
+			const result = await this.$axios.post(`upload/blobbs/${data.item.id}`,{
+				headers: {
+					Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+				},
+			})
+			if (result) {
+				this.getBlob({ 'id':this.actualIdBucket, 'Name':this.actualBucket});
+			}
+		},
+
 
 		async updateBucket() {
 			const data = {
@@ -143,15 +170,20 @@ export default {
 						Type: element.blobExt,
 						'Creation date': createdAt.toLocaleString(),
 						'Last update date': updateAt.toLocaleString(),
+						Options:``,
+
 					})
 				})
 			}
 			this.actualBucket = event.Name
+			this.actualIdBucket = event.id
 			this.showBlobs = 1
 			this.showBucket = 0
 			this.upload.idBucket = event.id
 			this.upload.Name = event.Name
 		},
+
+
 		async uploadBucket() {
 			this.upload.file = this.$refs.file.files[0];
 			let formData = new FormData();
@@ -169,6 +201,8 @@ export default {
 				this.$bvModal.hide('uploadBlob')
 			}
 		},
+
+
 		async dowloadBlob(event) {
 			const result = await this.$axios.get(
 				`https://team-foster.s3.eu-west-3.amazonaws.com/flux/1588235492144.png`,
