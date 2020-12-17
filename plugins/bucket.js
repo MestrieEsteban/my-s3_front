@@ -14,8 +14,8 @@ export default {
 			actualIdBucket: '',
 			bucketTable: [],
 			blobTable: [],
-			fieldsBucket: ['id', 'Name', 'Creation date', 'Last update date', 'Options'],
-			fieldsBlobs: ['id', 'Name', 'Size', 'Type', 'Creation date', 'Last update date', 'Options'],
+			fieldsBucket: ['Name', 'Creation date', 'Last update date', 'Options'],
+			fieldsBlobs: ['Name', 'Size', 'Type', 'Creation date', 'Last update date', 'Options'],
 			create: {
 				bucketName: '',
 			},
@@ -28,7 +28,7 @@ export default {
 				file: '',
 				idBucket: '',
 				Name: ''
-			}
+			},
 		}
 	},
 	beforeMount() {
@@ -168,6 +168,7 @@ export default {
 						Name: element.blobName,
 						Size: this.FileConvertSize(element.blobSize),
 						Type: element.blobExt,
+						'Path': element.blobPath,
 						'Creation date': createdAt.toLocaleString(),
 						'Last update date': updateAt.toLocaleString(),
 						Options:``,
@@ -205,7 +206,7 @@ export default {
 
 		async dowloadBlob(event) {
 			const result = await this.$axios.get(
-				`https://team-foster.s3.eu-west-3.amazonaws.com/flux/1588235492144.png`,
+				`upload/blobs/${event.id}`,
 				{
 					headers: {
 						Authorization: `Bearer ${this.$store.state.user.meta.token}`,
@@ -216,41 +217,20 @@ export default {
 			)
 			if (result) {
 				console.log(result)
-				const url = window.URL.createObjectURL(new Blob([result.data], { type: 'image/png' }))
-				const link = document.createElement('a')
-				const contentDisposition = result.headers['content-disposition']
-				console.log(contentDisposition);
-
-				let fileName = 'unknown'
-				if (contentDisposition) {
-					let fileNameMatch = contentDisposition.match(/filename="(.+)"/)
-					if (!fileNameMatch) {
-						fileNameMatch = contentDisposition.match(/filename=(.+)/)
-						if (fileNameMatch.length === 2) { fileName = fileNameMatch[1] }
-					} else if (fileNameMatch.length === 2) { fileName = fileNameMatch[1] }
-				}
-				link.href = url
-				link.setAttribute('download', fileName)
-				document.body.appendChild(link)
-
-				link.click()
-				link.remove()
-				window.URL.revokeObjectURL(url)
 			}
 
 		},
-
-
-
-
-
-
 		FileConvertSize(aSize) {
 			aSize = Math.abs(parseInt(aSize, 10));
 			var def = [[1, 'octets'], [1024, 'ko'], [1024 * 1024, 'Mo'], [1024 * 1024 * 1024, 'Go'], [1024 * 1024 * 1024 * 1024, 'To']];
 			for (var i = 0; i < def.length; i++) {
 				if (aSize < def[i][0]) return (aSize / def[i - 1][0]).toFixed(2) + ' ' + def[i - 1][1];
 			}
+		},
+		test(path) {
+			//console.log(path.item.Path);
+			console.log(this.location.url);
+			// this.$router.go(path.item.Path)
 		}
 
 	},

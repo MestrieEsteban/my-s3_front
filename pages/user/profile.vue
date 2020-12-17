@@ -33,7 +33,11 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-3" label="Password:" label-for="input-3">
+      <b-form-group
+        id="input-group-3"
+        label="Password:"
+        label-for="input-3"
+      >
         <b-form inline
           ><b-form-input
             id="input-3"
@@ -45,9 +49,9 @@
           >
           </b-form-input>
           <div style="margin-left: 20px"></div>
-          <b-button type="password" @click="switchVisibility"
-            >show / hide</b-button
-          >
+          <b-button @click="switchVisibility()">
+            <b-icon-eye></b-icon-eye>
+          </b-button>
         </b-form>
       </b-form-group>
     </b-form>
@@ -67,7 +71,7 @@ export default {
       form: {
         nickname: this.$store.state.user.user.nickname,
         email: this.$store.state.user.user.email,
-        password: this.$store.state.user.user.password,
+        password: '',
         passwordFieldType: 'password',
       },
     }
@@ -87,10 +91,44 @@ export default {
       )
       if (result.data === 'User is remove') {
         alert('Votre compte a été supprimer')
-        logOut()
+        this.logOut()
       }
     },
-    EditUser() {},
+	async EditUser() {
+			const data = {
+				nickname: this.form.nickname,
+				email: this.form.email,
+				password: this.form.password,
+			}
+			const result = await this.$axios.put(
+				`users/${this.$store.state.user.user.id}`,
+				data,
+				{
+					headers: {
+						Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+					},
+				}
+			)
+			if (result) {
+				
+			}
+	},
+	async logOut() {
+      this.$store
+        .dispatch('reset')
+        .then((result) => {
+          this.$router.push('/')
+        })
+        .catch((error) => {
+          this.loading = false
+          if (error.response && error.response.data) {
+            this.alert = {
+              type: 'error',
+              message: error.response.data.message || error.reponse.status,
+            }
+          }
+        })
+    },
   },
 }
 </script>
