@@ -9,7 +9,7 @@
 ![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/8.PNG?raw=true)
 ![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/9.PNG?raw=true)
 ![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/10.PNG?raw=true)
-![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/11.PNG?raw=true)
+![alt text](https://github.com/MestrieEsteban/my-s3_front/blob/master/gitImages/11.png?raw=true)
 
 
 
