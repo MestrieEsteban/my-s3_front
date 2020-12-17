@@ -53,9 +53,9 @@
     </b-form>
   </div>
 </template>
+<script src="../plugins/logout.js" type="module"></script>
 
 <script>
-import auth from '../../plugins/logout'
 export default {
   fetch({ store, redirect }) {
     if (!store.state.user) {
@@ -74,8 +74,7 @@ export default {
   },
   methods: {
     switchVisibility() {
-      this.form.passwordFieldType =
-        this.form.passwordFieldType === 'password' ? 'text' : 'password'
+      this.form.passwordFieldType = this.form.passwordFieldType === 'password' ? 'text' : 'password'
     },
     async deleteUser() {
       const result = await this.$axios.delete(
@@ -88,7 +87,7 @@ export default {
       )
       if (result.data === 'User is remove') {
         alert('Votre compte a été supprimer')
-        // await auth.methods.logOut()
+        logOut()
       }
     },
     EditUser() {},

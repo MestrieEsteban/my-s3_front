@@ -5,7 +5,7 @@ export default {
     ...mapGetters(['isAuthenticated', 'loggedInUser']),
   },
   methods: {
-    async logOut() {
+	  async logOut() {
       this.$store
         .dispatch('reset')
         .then((result) => {

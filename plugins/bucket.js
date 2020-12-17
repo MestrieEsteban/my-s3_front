@@ -114,12 +114,12 @@ export default {
 		},
 
 		async copyBlob(data){
-
-			const result = await this.$axios.post(`upload/blobbs/${data.item.id}`,{
+			const result = await this.$axios.post(`upload/blobs/${data.item.id}/copy`,{
 				headers: {
 					Authorization: `Bearer ${this.$store.state.user.meta.token}`,
 				},
 			})
+			console.log(result);
 			if (result) {
 				this.getBlob({ 'id':this.actualIdBucket, 'Name':this.actualBucket});
 			}

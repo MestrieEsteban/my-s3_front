@@ -18,10 +18,10 @@
 
     <b-table striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket'>
       <template #cell(Options)="row">
-        <b-button v-b-modal.updateBucket variant="info" @click="addIdUpdate(row)">
+        <b-button v-b-modal.updateBucket v-b-tooltip.hover title="Update bucket" variant="info" @click="addIdUpdate(row)">
           <b-icon-pencil></b-icon-pencil>
         </b-button>
-        <b-button variant="danger" @click="deleteBucket(row)">
+        <b-button variant="danger" v-b-tooltip.hover title="Delete bucket" @click="deleteBucket(row)">
           <b-icon-trash></b-icon-trash>
         </b-button>
       </template>
@@ -32,11 +32,11 @@
 
      <template #cell(Options)="row">
 
-        <b-button variant="info" @click="copyBlob(row)">
-          <b-icon-arrow-down></b-icon-arrow-down>
+        <b-button variant="info" v-b-tooltip.hover title="Copy blob" @click="copyBlob(row)">
+          <b-icon-files></b-icon-files>
         </b-button>
 
-        <b-button variant="danger" @click="deleteBlob1(row)">
+        <b-button variant="danger" v-b-tooltip.hover title="Delete blob" @click="deleteBlob1(row)">
           <b-icon-trash></b-icon-trash>
         </b-button>
 
