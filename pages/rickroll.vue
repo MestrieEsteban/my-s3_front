@@ -1,0 +1,13 @@
+<template>
+  <b-container>
+    <div>
+      <b-embed
+        type="iframe"
+        aspect="16by9"
+        src="https://www.youtube.com/embed/O91DT1pR1ew"
+        allowfullscreen
+		autoplay
+      ></b-embed>
+    </div>
+  </b-container>
+</template>

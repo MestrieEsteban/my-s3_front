@@ -1,6 +1,8 @@
 <template>
   <div>
     <div class="container">
+		<span class='title'>Create account</span>
+		<br>
       <b-form v-if="show" method="post" @submit.prevent="register">
         <b-form-group
           id="input-group-1"

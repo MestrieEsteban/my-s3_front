@@ -18,10 +18,12 @@
 
     <b-table responsive striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket'>
       <template #cell(Options)="row">
-        <b-button v-b-modal.updateBucket v-b-tooltip.hover title="Update bucket" variant="info" @click="addIdUpdate(row)">
+        <b-button v-b-modal.updateBucket id="tooltip-button-variant1" variant="info" @click="addIdUpdate(row)">
+		<b-tooltip target="tooltip-button-variant1" variant="info">Update bucket</b-tooltip>
           <b-icon-pencil></b-icon-pencil>
         </b-button>
-        <b-button variant="danger" v-b-tooltip.hover title="Delete bucket" @click="deleteBucket(row)">
+        <b-button v-b-tooltip.hover id="tooltip-button-variant" variant="danger" @click="deleteBucket(row)">
+		<b-tooltip target="tooltip-button-variant" variant="danger">Delete bucket</b-tooltip>
           <b-icon-trash></b-icon-trash>
         </b-button>
       </template>
@@ -29,18 +31,17 @@
 
 
 	<b-table responsive striped hover selectable :fields="fieldsBlobs" :items="blobTable" v-if='showBlobs'  @row-clicked="dowloadBlob($event)">
-
      <template #cell(Options)="row" >
-
-        <b-button variant="info" v-b-tooltip.hover title="Copy blob" @click="copyBlob(row)">
+        <b-button variant="info" id="tooltip-button-variant2" @click="copyBlob(row)">
+		<b-tooltip target="tooltip-button-variant2" variant="info">Copy blob</b-tooltip>
           <b-icon-files></b-icon-files>
         </b-button>
-
-        <b-button :href='row.item.Path' target='_blank' variant="info" v-b-tooltip.hover title="Download blob" >
+        <b-button :href='row.item.Path' target='_blank' id="tooltip-button-variant3" variant="success" v-b-tooltip.hover>
+		<b-tooltip target="tooltip-button-variant3" variant="success">Download blob</b-tooltip>
           <b-icon-cloud-download></b-icon-cloud-download>
         </b-button>
-
-        <b-button variant="danger" v-b-tooltip.hover title="Delete blob" @click="deleteBlob1(row)">
+        <b-button variant="danger" v-b-tooltip.hover id="tooltip-button-variant4" title="Delete blob" @click="deleteBlob1(row)">
+		  <b-tooltip target="tooltip-button-variant4" variant="danger">Delete blob</b-tooltip>
           <b-icon-trash></b-icon-trash>
         </b-button>
 
