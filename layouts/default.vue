@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar toggleable="lg" style='background-color:#20334D;'>
         <b-navbar-brand href="/">My-s3</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
