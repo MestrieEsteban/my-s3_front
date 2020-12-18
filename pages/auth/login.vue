@@ -33,6 +33,9 @@
               <b-button variant="primary" type="submit" class="button is-dark is-fullwidth">
                 Log In
               </b-button>
+              <b-button variant="danger" href="/auth/resetPassword" class="button is-dark is-fullwidth">
+				  Forgot password
+              </b-button>
             </div>
           </form>
         </div>

@@ -1,8 +1,6 @@
 <template>
-  <b-container fluid>
-    <b-row>
-     
-    </b-row>
+  <b-container>
+       
   </b-container>
 </template>
 

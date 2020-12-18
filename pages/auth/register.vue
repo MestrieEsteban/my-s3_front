@@ -42,6 +42,7 @@
             id="input-3"
             v-model="password"
             type="password"
+			:state="chackPassword1"
             name="password"
             required
             placeholder="Enter password"
@@ -57,11 +58,13 @@
             id="input-4"
             v-model="passwordConfirmation"
             type="password"
+			:state="chackPassword2"
             name="passwordConfirmation"
             required
             placeholder="Enter password confirmation"
           ></b-form-input>
         </b-form-group>
+  		<b-alert v-model="passShow" variant="danger">Password not match</b-alert>
 
         <b-button type="submit" variant="primary">Register</b-button>
       </b-form>
@@ -78,8 +81,27 @@ export default {
       password: '',
       passwordConfirmation: '',
       show: true,
+      passShow: false,
     }
   },
+  computed: {
+      chackPassword1() {
+        return this.password.length > 0 ? true : false
+      },
+      chackPassword2() {
+        if(this.passwordConfirmation.length > 0){
+			if(this.password === this.passwordConfirmation){
+				this.passShow = false
+				return true
+			}else{
+				this.passShow = true
+				return false
+			}
+		}else{
+			return false
+		}
+      },
+    },
   methods: {
     async register() {
       this.alert = null
@@ -109,7 +131,7 @@ export default {
             }
           }
         })
-    },
+	},
   },
 }
 </script>

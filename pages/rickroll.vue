@@ -1,13 +1,12 @@
 <template>
-  <b-container>
-    <div>
-      <b-embed
-        type="iframe"
-        aspect="16by9"
-        src="https://www.youtube.com/embed/O91DT1pR1ew"
-        allowfullscreen
-		autoplay
-      ></b-embed>
-    </div>
-  </b-container>
+  <div>
+    <iframe
+      width="100%"
+      height="1000px"
+      src="https://www.youtube.com/embed/O91DT1pR1ew?autoplay=1"
+      frameborder="0"
+      allow="autoplay"
+      allowfullscreen
+    ></iframe>
+  </div>
 </template>

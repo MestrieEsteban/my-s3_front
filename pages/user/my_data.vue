@@ -36,11 +36,15 @@
 		<b-tooltip target="tooltip-button-variant2" variant="info">Copy blob</b-tooltip>
           <b-icon-files></b-icon-files>
         </b-button>
+        <b-button v-b-modal.shareBlob variant="info" v-b-tooltip.hover id="tooltip-button-variantbb" @click="shareBlob(row)">
+		  <b-tooltip target="tooltip-button-variantbb" variant="info">Share</b-tooltip>
+          <b-icon-share></b-icon-share>
+        </b-button>
         <b-button :href='row.item.Path' target='_blank' id="tooltip-button-variant3" variant="success" v-b-tooltip.hover>
 		<b-tooltip target="tooltip-button-variant3" variant="success">Download blob</b-tooltip>
           <b-icon-cloud-download></b-icon-cloud-download>
         </b-button>
-        <b-button variant="danger" v-b-tooltip.hover id="tooltip-button-variant4" title="Delete blob" @click="deleteBlob1(row)">
+        <b-button variant="danger" v-b-tooltip.hover id="tooltip-button-variant4" @click="deleteBlob1(row)">
 		  <b-tooltip target="tooltip-button-variant4" variant="danger">Delete blob</b-tooltip>
           <b-icon-trash></b-icon-trash>
         </b-button>
@@ -72,12 +76,25 @@
       <b-button variant="success" @click="uploadBucket()">Upload</b-button>
     </b-modal>
 
+    <b-modal id="shareBlob" hide-footer title="Shared Blob">
+	  
+	  <b-form-input v-model="share.link">
+	  </b-form-input>
+	  <br>
+	  <b-button variant="success" :href="this.share.link">Go to</b-button>
+	  <br> <br>
+	  <b-img :src="this.share.link" fluid alt="Responsive image"></b-img>
+    </b-modal>
+
   </b-container>
 </template>
 
 <script src="../../plugins/bucket.js" 	type="module"></script>
 
 
-<style></style>
+<style>
+
+
+</style>
 
 

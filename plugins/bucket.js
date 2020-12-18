@@ -29,6 +29,9 @@ export default {
 				idBucket: '',
 				Name: ''
 			},
+			share: {
+				link: ''
+			}
 		}
 	},
 	beforeMount() {
@@ -62,7 +65,6 @@ export default {
 						Name: element.bucketName,
 						'Creation date': createdAt.toLocaleString(),
 						'Last update date': updateAt.toLocaleString(),
-						test: `<b-button variant="danger" @click="addBucket()">Create</b-button>`,
 					})
 				})
 			}
@@ -112,19 +114,6 @@ export default {
 				this.getBlob({ 'id':this.actualIdBucket, 'Name':this.actualBucket});
 			}
 		},
-
-		async copyBlob(data){
-			const result = await this.$axios.post(`upload/blobs/${data.item.id}/copy`,{
-				headers: {
-					Authorization: `Bearer ${this.$store.state.user.meta.token}`,
-				},
-			})
-			console.log(result);
-			if (result) {
-				this.getBlob({ 'id':this.actualIdBucket, 'Name':this.actualBucket});
-			}
-		},
-
 
 		async updateBucket() {
 			const data = {
@@ -220,6 +209,42 @@ export default {
 			}
 
 		},
+		
+		async copyBlob(data) {
+			console.log('oui');
+			const result = await this.$axios.get(
+				`upload/blobs/${data.item.id}/copy`,
+				{
+					headers: {
+						Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+					},
+				}
+			)
+			if (result) {
+				this.getBlob({ 'id': this.actualIdBucket, 'Name': this.actualBucket });
+			}
+
+		},
+		async shareBlob(data) {
+			const result = await this.$axios.get(
+				`upload/blobs/${data.item.id}/share`,
+				{
+					headers: {
+						Authorization: `Bearer ${this.$store.state.user.meta.token}`,
+					},
+				}
+			)
+			if (result) {
+				this.share.link = result.data
+			}
+		},
+
+
+
+
+
+
+
 		FileConvertSize(aSize) {
 			aSize = Math.abs(parseInt(aSize, 10));
 			var def = [[1, 'octets'], [1024, 'ko'], [1024 * 1024, 'Mo'], [1024 * 1024 * 1024, 'Go'], [1024 * 1024 * 1024 * 1024, 'To']];
@@ -227,11 +252,6 @@ export default {
 				if (aSize < def[i][0]) return (aSize / def[i - 1][0]).toFixed(2) + ' ' + def[i - 1][1];
 			}
 		},
-		test(path) {
-			//console.log(path.item.Path);
-			console.log(this.location.url);
-			// this.$router.go(path.item.Path)
-		}
 
 	},
 }
