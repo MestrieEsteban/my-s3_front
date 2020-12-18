@@ -1,111 +1,64 @@
 <template>
   <b-container>
-       
+    <b-row style="margin-top: 5%">
+      <b-col cols="12" md="6" style="background-color: #">
+        <span class="title">Your data is precious</span>
+        <span class="subtitle">My-s3 is a fast and secure storage, accessible from anywhere</span>
+		
+
+		<br>
+		<br>
+		<b-button href="/user/my_data" variant="outline-primary">Go to My-s3 data</b-button>
+		<b-button v-if="!$store.state.user" href="/auth/register" variant="primary">Create account</b-button>
+      </b-col>
+	  <b-col style='background-color: '>
+		  <br>
+		  <b-img src="https://my-s3-efrei.s3.eu-west-3.amazonaws.com/b2f5915b-659a-467b-935e-f22d355c4c90/Test/chat.png" fluid alt="Responsive image"></b-img>
+	  </b-col>
+      <!-- <b-col style="background-color: ">
+        <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"
+        ></b-img>
+      </b-col> -->
+    </b-row>
   </b-container>
 </template>
 
 <script>
 export default {
-  el: '#banksy',
   data() {
-    return {
-      shredding: null,
-      dropping: null,
-    }
   },
   methods: {
-    shred() {
-      const anime = this.$anime
-      this.shredding = anime({
-        targets: '#original',
-        height: 0,
-        duration: 10000,
-        easing: 'linear',
-      })
-
-      this.dropping = anime({
-        targets: '#painting',
-        translateY: '101%',
-        duration: 10000,
-        easing: 'linear',
-      })
-    },
-    artSelected(e) {
-      this.shredding.pause()
-      this.dropping.pause()
-
-      loadImage(
-        e.target.files[0],
-        (canvas) => {
-          let url = canvas.toDataURL('image/jpeg')
-
-          document.getElementById(
-            'original'
-          ).style.backgroundImage = `url(${url})`
-
-          let elements = Array.from(document.getElementsByClassName('shred'))
-
-          elements.forEach((element) => {
-            element.style.backgroundImage = `url(${url})`
-          })
-
-          document.getElementById('original').style.height = '100%'
-          document.getElementById('painting').style.transform = 'translateY(0)'
-
-          this.shred()
-        },
-        {
-          canvas: true,
-          crop: true,
-          maxHeight: 566,
-          maxWidth: 392,
-          orientation: true,
-        }
-      )
-    },
+    
   },
   mounted() {
-    this.shred()
   },
 }
 </script>
 
 <style>
-body {
-  overflow: hidden;
-}
-
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
-  font-weight: 300;
-  font-size: 40px;
+  font-size: 6vh;
   color: #35495e;
   letter-spacing: 1px;
 }
 
 .subtitle {
   font-weight: 300;
-  font-size: 42px;
+  font-size: 3vh;
   color: #526488;
   word-spacing: 5px;
   padding-bottom: 15px;
 }
-
-.links {
-  padding-top: 15px;
-}
-input {
-  display: none;
-}
-
-header {
-  position: absolute;
-  top: 2em;
-}
-
-header a {
-  color: black;
+.oui {
+  height: 200vh;
+  min-height: 500px;
+  width: 100%;
+  background-attachment: fixed;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

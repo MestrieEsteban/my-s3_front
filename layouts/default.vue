@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div>
-      <b-navbar toggleable="lg" style='background-color:#20334D !important;' type="dark" variant="dark">
-        <b-navbar-brand style='color:white !important' href="/">My-s3</b-navbar-brand>
+      <b-navbar toggleable="lg" style='background-color:#20334D !important; position: sticky; top: 0; z-index:1000' type="dark" variant="dark">
+        <b-navbar-brand style='color: !important' href="/"><b-icon-folder-symlink></b-icon-folder-symlink> My-s3</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -31,7 +30,6 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-    </div>
     <Nuxt />
   </div>
 </template>
@@ -46,7 +44,12 @@
   color: #35495e;
   letter-spacing: 1px;
 }
-
+.home-enter-active, .home-leave-active {
+  transition: opacity .5s
+}
+.home-enter, .home-leave-active {
+  opacity: 0
+}
 </style>
 
 <script>

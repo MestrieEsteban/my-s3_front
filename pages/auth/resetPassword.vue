@@ -28,8 +28,7 @@
 export default {
   data() {
     return {
-      email: 'esteban94.em@gmail.com',
-     
+      email: '',
     }
   },
   methods: {
