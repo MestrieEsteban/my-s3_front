@@ -49,7 +49,7 @@ export default {
   ],
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-	  baseURL: 'http://localhost:34734/api/',
+	  baseURL: 'http://my-s3-serveur.herokuapp.com:34734/api/',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
