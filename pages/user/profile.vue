@@ -40,7 +40,11 @@
 <script src="../plugins/logout.js" type="module"></script>
 
 <script>
+
+import logoutMixin from '../../mixins/logout'
+
 export default {
+  mixins: [logoutMixin],
   fetch({ store, redirect }) {
     if (!store.state.user) {
       redirect('/auth/login')
@@ -92,22 +96,6 @@ export default {
       )
       if (result) {
       }
-    },
-    async logOut() {
-      this.$store
-        .dispatch('reset')
-        .then((result) => {
-          this.$router.push('/')
-        })
-        .catch((error) => {
-          this.loading = false
-          if (error.response && error.response.data) {
-            this.alert = {
-              type: 'error',
-              message: error.response.data.message || error.reponse.status,
-            }
-          }
-        })
     },
   },
 }

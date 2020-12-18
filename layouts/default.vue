@@ -49,4 +49,9 @@
 
 </style>
 
-<script src="../plugins/logout.js" type="module"></script>
+<script>
+import logoutMixin from '../mixins/logout'
+export default{
+	mixins: [logoutMixin],
+}
+</script>

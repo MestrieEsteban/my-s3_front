@@ -1,5 +1,4 @@
-export default {
-  
+export default { 
   methods: {
 	  async logOut() {
       this.$store
