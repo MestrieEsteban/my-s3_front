@@ -7,16 +7,28 @@
       <b-button v-b-modal.createBucket variant="success" style="float: right; width:200px">Create Bucket</b-button >
 	  <br>
 	</div>
+
     <div v-show='showBlobs'>
 	  <b-icon-arrow-left-circle font-scale="1.5" style='cursor:pointer' @click="getBucket()"></b-icon-arrow-left-circle>
 	  <span> /{{this.actualBucket}}</span>
 	  <b-button v-b-modal.uploadBlob variant="success" style="float: right; width:200px">Upload File</b-button >
       <br>
     </div>
+	<br>
+	 <b-form-checkbox
+	  style="float: right; margin-top: -px; margin-left:1 -10px;"
+      id="checkbox-1"
+      v-model="status"
+      name="checkbox-1"
+      value="accepted"
+      unchecked-value="not_accepted"
+    >
+	Show items
+	</b-form-checkbox>
 
 	<br>
 
-    <b-table responsive striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket'>
+    <b-table responsive striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket && status == "not_accepted"'>
       <template #cell(Options)="row">
         <b-button v-b-modal.updateBucket id="tooltip-button-variant1" variant="info" @click="addIdUpdate(row)">
 		<b-tooltip target="tooltip-button-variant1" variant="info">Update bucket</b-tooltip>
@@ -28,9 +40,24 @@
         </b-button>
       </template>
     </b-table>
+	<b-row align-h="center" v-if='showBucket && status == "accepted"'>
+		<b-col class="text-center" style='margin-top:10px;' align-self="center" cols='auto' v-for="item in bucketTable" :key='item'>
+			<b-card
+				:title="item.Name"
+				style="min-width: 10rem;">
+			<b-icon-folder v-on:click="getBlob(item)" class="h1 mb-2"></b-icon-folder> <br>
+			<b-button v-b-modal.updateBucket variant="info" @click="addIdUpdate({'item': {'id': item.id} })">
+				<b-icon-pencil></b-icon-pencil>
+			</b-button>
+			<b-button variant="danger" @click="deleteBucket({'item': {'id': item.id} })">
+				<b-icon-trash></b-icon-trash>
+			</b-button>
+			</b-card>
+		</b-col>
+	</b-row>
 
 
-	<b-table responsive striped hover selectable :fields="fieldsBlobs" :items="blobTable" v-if='showBlobs'  @row-clicked="dowloadBlob($event)">
+	<b-table responsive striped hover selectable :fields="fieldsBlobs" :items="blobTable" v-if='showBlobs && status == "not_accepted"'  @row-clicked="dowloadBlob($event)">
      <template #cell(Options)="row" >
         <b-button variant="info" id="tooltip-button-variant2" @click="copyBlob(row)">
 		<b-tooltip target="tooltip-button-variant2" variant="info">Copy blob</b-tooltip>
@@ -48,10 +75,52 @@
 		  <b-tooltip target="tooltip-button-variant4" variant="danger">Delete blob</b-tooltip>
           <b-icon-trash></b-icon-trash>
         </b-button>
-
       </template>
-
 	</b-table>
+
+		<b-row align-h="center" v-if='showBlobs && status == "accepted"'>
+		<b-col class="text-center" style='margin-top:10px;' align-self="center" cols='auto' v-for="item in blobTable" :key='item'>
+			<b-card
+				:img-src="item.Path"
+				:title="item.Name"
+				style="min-width: 10rem; max-width: 10rem">
+			<br>
+			<b-button variant="info" id="tooltip-button-variant2" @click="copyBlob({'item': {'id': item.id} })">
+				<b-tooltip target="tooltip-button-variant2" variant="info">Copy blob</b-tooltip>
+				<b-icon-files></b-icon-files>
+			</b-button>
+			<b-button v-b-modal.shareBlob variant="info" v-b-tooltip.hover id="tooltip-button-variantbb" @click="shareBlob({'item': {'id': item.id} })">
+				<b-tooltip target="tooltip-button-variantbb" variant="info">Share</b-tooltip>
+				<b-icon-share></b-icon-share>
+			</b-button>
+			<b-button :href='item.Path' target='_blank' id="tooltip-button-variant3" variant="success" v-b-tooltip.hover>
+				<b-tooltip target="tooltip-button-variant3" variant="success">Download blob</b-tooltip>
+				<b-icon-cloud-download></b-icon-cloud-download>
+			</b-button>
+				<b-button variant="danger" v-b-tooltip.hover id="tooltip-button-variant4" @click="deleteBlob1({'item': {'id': item.id} })">
+				<b-tooltip target="tooltip-button-variant4" variant="danger">Delete blob</b-tooltip>
+				<b-icon-trash></b-icon-trash>
+			</b-button>
+			
+			</b-card>
+		</b-col>
+	</b-row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <b-modal id="createBucket" hide-footer title="Create Bucket">
       <b-form-input id="input-1" v-model="create.bucketName" type="text" required placeholder="Enter bucket name">

@@ -14,6 +14,7 @@ export default {
 			actualIdBucket: '',
 			bucketTable: [],
 			blobTable: [],
+			status: 'not_accepted',
 			fieldsBucket: ['Name', 'Creation date', 'Last update date', 'Options'],
 			fieldsBlobs: ['Name', 'Size', 'Type', 'Creation date', 'Last update date', 'Options'],
 			create: {

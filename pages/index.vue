@@ -3,18 +3,30 @@
     <b-row style="margin-top: 5%">
       <b-col cols="12" md="6" style="background-color: #">
         <span class="title">Your data is precious</span>
-        <span class="subtitle">My-s3 is a fast and secure storage, accessible from anywhere</span>
-		
+        <span class="subtitle"
+          >My-s3 is a fast and secure storage, accessible from anywhere</span
+        >
 
-		<br>
-		<br>
-		<b-button href="/user/my_data" variant="outline-primary">Go to My-s3 data</b-button>
-		<b-button v-if="!$store.state.user" href="/auth/register" variant="primary">Create account</b-button>
+        <br />
+        <br />
+        <b-button href="/user/my_data" variant="outline-primary"
+          >Go to My-s3 data</b-button
+        >
+        <b-button
+          v-if="!$store.state.user"
+          href="/auth/register"
+          variant="primary"
+          >Create account</b-button
+        >
       </b-col>
-	  <b-col style='background-color: '>
-		  <br>
-		  <b-img src="https://my-s3-efrei.s3.eu-west-3.amazonaws.com/b2f5915b-659a-467b-935e-f22d355c4c90/Test/chat.png" fluid alt="Responsive image"></b-img>
-	  </b-col>
+      <b-col style="background-color: ">
+        <br />
+        <b-img v-if="cat"
+          :src="cat"
+          fluid
+          alt="Cat"
+        ></b-img>
+      </b-col>
       <!-- <b-col style="background-color: ">
         <b-img src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image"
         ></b-img>
@@ -26,11 +38,23 @@
 <script>
 export default {
   data() {
-  },
-  methods: {
-    
+	  return {
+		  cat : '',
+	  }
   },
   mounted() {
+    this.getCat()
+  },
+  methods: {
+	  getCat(){
+		  fetch('https://aws.random.cat/meow')
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				this.cat = data.file
+			});
+	  },
   },
 }
 </script>
