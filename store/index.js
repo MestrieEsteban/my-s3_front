@@ -29,7 +29,7 @@ const createStore = () => {
           try {
             auth = JSON.parse(parsed.auth)
           } catch (err) {
-            // No valid cookie found
+            console.log(err);
           }
         }
         commit('setAuth', auth)
@@ -42,7 +42,6 @@ const createStore = () => {
             cookies.set('x-access-token', response.data.data.meta.token, {
               expires: 7,
             })
-            // cookies.set('nickname', response.data.data.user.nickname, { expires: 7 })
             return response
           } catch (error) {
             console.log(response)

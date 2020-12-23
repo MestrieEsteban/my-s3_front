@@ -105,23 +105,6 @@
 			</b-card>
 		</b-col>
 	</b-row>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <b-modal id="createBucket" hide-footer title="Create Bucket">
       <b-form-input id="input-1" v-model="create.bucketName" type="text" required placeholder="Enter bucket name">
 
