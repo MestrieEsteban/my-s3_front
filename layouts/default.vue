@@ -44,12 +44,11 @@
   color: #35495e;
   letter-spacing: 1px;
 }
-.home-enter-active, .home-leave-active {
-  transition: opacity .5s
+
+body{
+	background-color: #FFFFFF;
 }
-.home-enter, .home-leave-active {
-  opacity: 0
-}
+
 </style>
 
 <script>

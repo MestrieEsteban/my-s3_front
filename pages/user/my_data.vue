@@ -4,7 +4,7 @@
     <br>
 	
     <div v-show='showBucket'>
-      <b-button v-b-modal.createBucket variant="success" style="float: right; width:200px">Create Bucket</b-button >
+      <b-button v-b-modal.createBucket variant="success" style="float: right; width:200px">Create Folder</b-button >
 	  <br>
 	</div>
 
@@ -15,20 +15,14 @@
       <br>
     </div>
 	<br>
-	 <b-form-checkbox
-	  style="float: right; margin-top: -px; margin-left:1 -10px;"
-      id="checkbox-1"
-      v-model="status"
-      name="checkbox-1"
-      value="accepted"
-      unchecked-value="not_accepted"
-    >
-	Show items
+	<b-form-checkbox style="float: right; margin-top: -px; margin-left:1 -10px;" id="checkbox-1" v-model="status" name="checkbox-1" value="accepted" unchecked-value="not_accepted">
+		Show items
 	</b-form-checkbox>
 
 	<br>
 
-    <b-table responsive striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket && status == "not_accepted"'>
+	<b-skeleton-table :rows="4" :columns="4" :table-props="{ bordered: true, striped: true }" v-if="!bucketIsLoded"></b-skeleton-table>
+    <b-table responsive striped hover selectable :fields="fieldsBucket" :items="bucketTable" @row-clicked="getBlob($event)" v-if='showBucket && status == "not_accepted" && bucketIsLoded'>
       <template #cell(Options)="row">
         <b-button v-b-modal.updateBucket id="tooltip-button-variant1" variant="info" @click="addIdUpdate(row)">
 		<b-tooltip target="tooltip-button-variant1" variant="info">Update bucket</b-tooltip>
@@ -41,8 +35,22 @@
       </template>
     </b-table>
 	<b-row align-h="center" v-if='showBucket && status == "accepted"'>
-		<b-col class="text-center" style='margin-top:10px;' align-self="center" cols='auto' v-for="item in bucketTable" :key='item'>
-			<b-card
+		<b-col style='margin-top:10px;' cols='auto' v-for="item in bucketTable" :key='item.id'>
+			<div style="min-width: 9rem; max-width: 9rem; border-radius: 8px; cursor:pointer;" :style='`background-color:${item.bgColor}`' v-on:click="getBlob(item)">
+          		<b-icon-folder-fill font-scale="3" :variant="item.typeColor" style="padding-left:10px;"></b-icon-folder-fill>
+				<b-dropdown size="lg" variant='link' toggle-class="text-decoration-none" no-caret style="padding-bottom:25px;padding-left:45px; position: absolute; ">
+					<template #button-content>
+					<b-icon-three-dots-vertical :style='`color: ${item.textColor} !important`'></b-icon-three-dots-vertical>
+					</template>
+					<b-dropdown-item variant="info" v-b-modal.updateBucket @click="addIdUpdate({'item': {'id': item.id} })">Update folder</b-dropdown-item>
+					<b-dropdown-item variant="danger" @click="deleteBucket({'item': {'id': item.id} })">Delete Folder</b-dropdown-item>
+				</b-dropdown>
+				<br>
+				<span style="padding-left:10px; font-size:20px" :style='`color: ${item.textColor} !important`'>{{item.Name}}</span>
+				<br style='line-height:22px;'>
+				<span style="padding-left:10px; font-size:10px" :style='`color: ${item.textColor} !important`'>{{item['Creation date']}}</span>	
+			</div>
+			<!-- <b-card
 				:title="item.Name"
 				style="min-width: 10rem;">
 			<b-icon-folder v-on:click="getBlob(item)" class="h1 mb-2"></b-icon-folder> <br>
@@ -52,10 +60,9 @@
 			<b-button variant="danger" @click="deleteBucket({'item': {'id': item.id} })">
 				<b-icon-trash></b-icon-trash>
 			</b-button>
-			</b-card>
+			</b-card> -->
 		</b-col>
 	</b-row>
-
 
 	<b-table responsive striped hover selectable :fields="fieldsBlobs" :items="blobTable" v-if='showBlobs && status == "not_accepted"'  @row-clicked="dowloadBlob($event)">
      <template #cell(Options)="row" >
@@ -79,8 +86,50 @@
 	</b-table>
 
 		<b-row align-h="center" v-if='showBlobs && status == "accepted"'>
-		<b-col class="text-center" style='margin-top:10px;' align-self="center" cols='auto' v-for="item in blobTable" :key='item'>
-			<b-card
+		<b-col style='margin-top:10px;'  cols='auto' v-for="item in blobTable" :key='item.id'>
+			<div style="min-width: 9rem; max-width: 9rem; background-color: #8cc3ff; border-radius: 8px; cursor:default">
+				<span v-if="item.Type == 'png' || item.Type == 'jpg'">
+          			<b-icon-file-earmark-image-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-image-fill>
+				</span>
+				<span v-else-if='item.Type == "txt"'>
+          			<b-icon-file-earmark-text-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-text-fill>
+				</span>
+				<span v-else-if='item.Type == "pdf"'>
+          			<b-icon-file-earmark-ppt-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-ppt-fill>
+				</span>
+				<span v-else-if='item.Type == "docx"'>
+          			<b-icon-file-earmark-word-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-word-fill>
+				</span>
+				<span v-else-if='item.Type == "zip"'>
+          			<b-icon-file-earmark-zip-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-zip-fill>
+				</span>
+				<span v-else-if='item.Type == "mp3" || item.Type == "mp4" || item.Type == "wav"'>
+          			<b-icon-file-music-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-music-fill>
+				</span>
+				<span v-else-if='item.Type == "csv"'>
+          			<b-icon-file-earmark-spreadsheet-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-spreadsheet-fill>
+				</span>
+				<span v-else>
+          			<b-icon-file-earmark-fill font-scale="3" variant="primary" style="padding-left:10px;"></b-icon-file-earmark-fill>
+				</span>
+				<b-dropdown size="lg" variant='link' toggle-class="text-decoration-none" no-caret style="padding-bottom:25px;padding-left:45px; position: absolute; ">
+					<template #button-content>
+					<b-icon-three-dots-vertical style='color: #007BFF !important'></b-icon-three-dots-vertical>
+					</template>
+					<b-dropdown-item variant="info" @click="copyBlob({'item': {'id': item.id} })">Copy File</b-dropdown-item>
+					<b-dropdown-item v-b-modal.shareBlob variant="info" @click="shareBlob({'item': {'id': item.id} })">Share File</b-dropdown-item>
+					<b-dropdown-item variant="success" :href='item.Path'>Download File</b-dropdown-item>
+					<b-dropdown-item variant="danger" @click="deleteBlob1({'item': {'id': item.id} })">Delete File</b-dropdown-item>
+				</b-dropdown>
+				<br>
+				<span style="padding-left:10px; color:#007BFF; font-size:20px">{{item.Name}}</span>
+				<br style='line-height:22px;'>
+				<span style="padding-left:10px; color:#007BFF; font-size:10px">{{item['Creation date']}}</span>
+			</div>
+
+
+
+			<!-- <b-card
 				:img-src="item.Path"
 				:title="item.Name"
 				style="min-width: 10rem; max-width: 10rem">
@@ -102,13 +151,18 @@
 				<b-icon-trash></b-icon-trash>
 			</b-button>
 			
-			</b-card>
+			</b-card> -->
 		</b-col>
 	</b-row>
+
     <b-modal id="createBucket" hide-footer title="Create Bucket">
       <b-form-input id="input-1" v-model="create.bucketName" type="text" required placeholder="Enter bucket name">
-
 	  </b-form-input>
+	  <b-form-group label="Color :" v-slot="{ ariaDescribedby  }">
+		<b-form-radio v-model="create.selected" :aria-describedby="ariaDescribedby" name="some-radios" value="red">Red</b-form-radio>
+		<b-form-radio v-model="create.selected" :aria-describedby="ariaDescribedby" name="some-radios" value="blue">Blue</b-form-radio>
+		<b-form-radio v-model="create.selected" :aria-describedby="ariaDescribedby" name="some-radios" value="yellow">Yellow</b-form-radio>
+      </b-form-group>
       <br />
       <b-button variant="success" @click="addBucket()">Create</b-button>
     </b-modal>

@@ -10,6 +10,7 @@ export default {
 		return {
 			showBlobs: 0,
 			showBucket: 1,
+			bucketIsLoded: 0,
 			actualBucket: '',
 			actualIdBucket: '',
 			bucketTable: [],
@@ -19,6 +20,7 @@ export default {
 			fieldsBlobs: ['Name', 'Size', 'Type', 'Creation date', 'Last update date', 'Options'],
 			create: {
 				bucketName: '',
+				selected:'red'
 			},
 			update: {
 				bucketName: '',
@@ -66,8 +68,12 @@ export default {
 						Name: element.bucketName,
 						'Creation date': createdAt.toLocaleString(),
 						'Last update date': updateAt.toLocaleString(),
+						'bgColor': element.bgColor,
+						'textColor': element.textColor,
+						'typeColor': element.typeColor,
 					})
 				})
+				this.bucketIsLoded = 1
 			}
 			this.showBlobs = 0
 			this.showBucket = 1
@@ -75,7 +81,8 @@ export default {
 
 		async addBucket() {
 			const data = {
-				bucketName: this.create.bucketName,
+				bucketName:  this.create.bucketName,
+				bucketColor: this.create.selected,
 			}
 			const result = await this.$axios.post(
 				`upload/${this.$store.state.user.user.id}/buckets`,
@@ -87,6 +94,12 @@ export default {
 				}
 			)
 			if (result) {
+				this.$bvToast.toast(`The folder ${this.create.bucketName} was created`, {
+					title: 'Folder created',
+					autoHideDelay: 2000,
+					variant: 'success',
+					appendToast: false
+				})
 				this.create.bucketName = ''
 				this.getBucket()
 				this.$bvModal.hide('createBucket')
@@ -100,6 +113,12 @@ export default {
 				},
 			})
 			if (result) {
+				this.$bvToast.toast(`The folder was deleted`, {
+					title: 'Folder deleted',
+					autoHideDelay: 2000,
+					variant: 'danger',
+					appendToast: false
+				})
 				this.getBucket()
 			}
 		},
@@ -112,6 +131,12 @@ export default {
 				},
 			})
 			if (result) {
+				this.$bvToast.toast(`The file was deleted`, {
+					title: 'File deleted',
+					autoHideDelay: 2000,
+					variant: 'danger',
+					appendToast: false
+				})
 				this.getBlob({ 'id':this.actualIdBucket, 'Name':this.actualBucket});
 			}
 		},
@@ -130,6 +155,12 @@ export default {
 				}
 			)
 			if (result) {
+				this.$bvToast.toast(`The folder ${this.update.bucketName} was updated `, {
+					title: 'Folder updated',
+					autoHideDelay: 2000,
+					variant: 'success',
+					appendToast: false
+				})
 				this.bucketTable = []
 				this.update.bucketName = ''
 				this.getBucket()
@@ -156,7 +187,7 @@ export default {
 					this.blobTable.push({
 						id: element.blobId,
 						Name: element.blobName,
-						Size: this.FileConvertSize(element.blobSize),
+						Size: element.blobSize ? this.FileConvertSize(element.blobSize):'',
 						Type: element.blobExt,
 						'Path': element.blobPath,
 						'Creation date': createdAt.toLocaleString(),
