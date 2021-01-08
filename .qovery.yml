@@ -1,0 +1,15 @@
+---
+application:
+  name: "my-s3"
+  project: "Test"
+  organization: "QoveryCommunity"
+databases:
+- type: "POSTGRESQL"
+  name: "my-S3"
+  version: "10"
+routers:
+- name: "main-my-s3"
+  routes:
+  - application_name: "my-s3"
+    paths:
+    - "/*"
